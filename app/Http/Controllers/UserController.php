@@ -83,16 +83,17 @@ class UserController extends Controller
 
         $email=$request->input('email');
         $otp=$request->input('otp');
-        $user = User::where('email', '=', $email)->where('otp', '=', $otp)->count();
+        $count = User::where('email', '=', $email)
+        ->where('otp', '=', $otp)->count();
 
-        if($user==1){
-            User::where('email','=',$email)->update(['otp'=>'0']);
+        if($count==1){
+            User::where('email', '=', $email)->update(['otp'=>'0']);
 
             $token=JWTToken::CreateTokenForResetPassword($request->input('email'));
             return response()->json([
-                "token"=>$token,
-                "message"=>"OTP Verify Successfully!",
-                "status"=>"success"
+                'status'=>'success',
+                'message'=>'OTP Verify Successfully!',
+                'token'=>$token
             ],200);
 
         }else{

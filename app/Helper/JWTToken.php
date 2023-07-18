@@ -4,6 +4,7 @@ namespace App\Helper;
 
 use Exception;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class JWTToken{
     public static function CreateToken($userEmail):string{

@@ -31,6 +31,10 @@ class UserController extends Controller
         return view('pages.auth.reset-pass-page');
     }
 
+    function ProfilePage():View{
+        return view('pages.dashboard.profile-page');
+    }
+
 
 
 
@@ -61,11 +65,11 @@ class UserController extends Controller
     public function UserLogin(Request $request){
         $user=User::where('email','=',$request->input('email'))
                     ->where('password','=',$request->input('password'))
-                    ->count();
+                    ->select('id')->first();
 
-        if($user==1){
+        if($user!==null){
 
-            $token=JWTToken::CreateToken($request->input('email'));
+            $token=JWTToken::CreateToken($request->input('email'),$request->id);
             return response()->json([
                 "message"=>"User Login Successfully!",
                 "status"=>"success"
@@ -142,5 +146,36 @@ class UserController extends Controller
                     'message'=>'Something Went Wrong!'
                 ],200);
         }
+    }
+
+    function UserLogout(){
+        return redirect('/userLogin')->cookie('token','',-1);
+    }
+
+    function UserProfile(Request $request){
+        $email=$request->header('email');
+        $user=User::where('email','=',$email)->first();
+
+        return response()->json([
+                'status'=>'success',
+                'message'=>'Request Successfully!',
+                'data' => $user
+            ],200);
+    }
+
+    function UserUpdate(Request $request){
+        $email=$request->header('email');
+        User::where('email', '=', $email)->update([
+            'firstName' => $request->input('firstName'),
+            'lastName' => $request->input('lastName'),
+            'mobile' => $request->input('mobile'),
+            'password' => $request->input('password'),
+        ]);
+
+
+        return response()->json([
+                'status'=>'success',
+                'message'=>'Profile Updated Successfully!'
+            ],200);
     }
 }

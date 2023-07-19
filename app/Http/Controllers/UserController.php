@@ -2,15 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\JWTToken;
-use App\Mail\OTPMail;
-use App\Models\User;
 use Exception;
+use App\Models\User;
+use App\Mail\OTPMail;
+use App\Helper\JWTToken;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+
+    function LoginPage():View{
+        return view('pages.auth.login-page');
+    }
+
+    function RegistrationPage():View{
+        return view('pages.auth.registration-page');
+    }
+    function SendOtpPage():View{
+        return view('pages.auth.send-otp-page');
+    }
+    function VerifyOTPPage():View{
+        return view('pages.auth.verify-otp-page');
+    }
+
+    function ResetPasswordPage():View{
+        return view('pages.auth.reset-pass-page');
+    }
+
+
+
+
     public function UserRegistration(Request $request){
 
         try{
@@ -44,10 +67,9 @@ class UserController extends Controller
 
             $token=JWTToken::CreateToken($request->input('email'));
             return response()->json([
-                "token"=>$token,
                 "message"=>"User Login Successfully!",
                 "status"=>"success"
-            ],200);
+            ],200)->cookie('token',$token,60*24*30);
 
         }else{
 
@@ -93,8 +115,7 @@ class UserController extends Controller
             return response()->json([
                 'status'=>'success',
                 'message'=>'OTP Verify Successfully!',
-                'token'=>$token
-            ],200);
+            ],200)->cookie('token',$token,60*24*30);
 
         }else{
             return response()->json([

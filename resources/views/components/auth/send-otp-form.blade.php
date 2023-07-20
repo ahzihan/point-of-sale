@@ -18,8 +18,14 @@
 <script>
    async function VerifyEmail() {
         let email = document.getElementById('email').value;
-        if(email.length === 0){
-           errorToast('Please enter your email address')
+
+        let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if(email.length===0){
+            errorToast("Email is required");
+        }
+        else if(!email.match(mailformat)){
+            errorToast("Invalid Email Address");
         }
         else{
             showLoader();

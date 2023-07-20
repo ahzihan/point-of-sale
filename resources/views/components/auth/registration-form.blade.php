@@ -51,8 +51,14 @@
         let mobile = document.getElementById('mobile').value;
         let password = document.getElementById('password').value;
 
+
+        let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
         if(email.length===0){
-            errorToast('Email is required')
+            errorToast("Email is required");
+        }
+        else if(!email.match(mailformat)){
+            errorToast("Invalid Email Address");
         }
         else if(firstName.length===0){
             errorToast('First Name is required')
@@ -62,9 +68,14 @@
         }
         else if(mobile.length===0){
             errorToast('Mobile is required')
+        }else if(mobile.length < 11){
+            errorToast("Password should be at least 11 character");
         }
         else if(password.length===0){
-            errorToast('Password is required')
+            errorToast("Password is required");
+        }
+        else if(password.length < 5){
+            errorToast("Password should be at least 5 character");
         }
         else{
             showLoader();

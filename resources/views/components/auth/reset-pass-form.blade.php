@@ -24,7 +24,10 @@
         let cpassword = document.getElementById('cpassword').value;
 
         if(password.length===0){
-            errorToast('Password is required')
+            errorToast("Password is required");
+        }
+        else if(password.length < 5){
+            errorToast("Password should be at least 5 character");
         }
         else if(cpassword.length===0){
             errorToast('Confirm Password is required')

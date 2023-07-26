@@ -64,8 +64,8 @@ class UserController extends Controller
 
     public function UserLogin(Request $request){
         $user=User::where('email','=',$request->input('email'))
-                    ->where('password','=',$request->input('password'))
-                    ->select('id')->first();
+                ->where('password','=',$request->input('password'))
+                ->select('id')->first();
 
         if($user!==null){
 
@@ -136,15 +136,15 @@ class UserController extends Controller
             User::where('email', '=', $email)->update(['password' => $password]);
 
             return response()->json([
-                    'status'=>'success',
-                    'message'=>'Password Reset Successfully!'
-                ],200);
+                'status'=>'success',
+                'message'=>'Password Reset Successfully!'
+            ],200);
         }
         catch(Exception $e){
             return response()->json([
-                    'status'=>'failed',
-                    'message'=>'Something Went Wrong!'
-                ],200);
+                'status'=>'failed',
+                'message'=>'Something Went Wrong!'
+            ],200);
         }
     }
 
@@ -157,10 +157,10 @@ class UserController extends Controller
         $user=User::where('email','=',$email)->first();
 
         return response()->json([
-                'status'=>'success',
-                'message'=>'Request Successfully!',
-                'data' => $user
-            ],200);
+            'status'=>'success',
+            'message'=>'Request Successfully!',
+            'data' => $user
+        ],200);
     }
 
     function UserUpdate(Request $request){
@@ -168,7 +168,7 @@ class UserController extends Controller
 
         $request->validate([
             'password' => 'required|min:5'
-            ]);
+        ]);
 
         User::where('email', '=', $email)->update([
             'firstName' => $request->input('firstName'),
@@ -177,10 +177,9 @@ class UserController extends Controller
             'password' => $request->input('password'),
         ]);
 
-
         return response()->json([
-                'status'=>'success',
-                'message'=>'Profile Updated Successfully!'
-            ],200);
+            'status'=>'success',
+            'message'=>'Profile Updated Successfully!'
+        ],200);
     }
 }

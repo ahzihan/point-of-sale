@@ -48,28 +48,28 @@ Route::get('/list-customer', [CustomerController::class, 'CustomerList'])->middl
 Route::post('/delete-customer', [CustomerController::class, 'CustomerDelete'])->middleware([TokenVerificationMiddleware::class]);
 
 
-//Customer Api
+//Category Api
 Route::post('/create-category', [CategoryController::class, 'CategoryCreate'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/update-category', [CategoryController::class, 'CategoryUpdate'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/list-category', [CategoryController::class, 'CategoryList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/delete-category', [CategoryController::class, 'CategoryDelete'])->middleware([TokenVerificationMiddleware::class]);
 
 
-//Customer Api
+//Unit Api
 Route::post('/create-unit', [UnitController::class, 'UnitCreate'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/update-unit', [UnitController::class, 'UnitUpdate'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/list-unit', [UnitController::class, 'UnitList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/delete-unit', [UnitController::class, 'UnitDelete'])->middleware([TokenVerificationMiddleware::class]);
 
 
-//Customer Api
+//Product Api
 Route::post('/create-product', [ProductController::class, 'ProductCreate'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/update-product', [ProductController::class, 'ProductUpdate'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/list-product', [ProductController::class, 'ProductList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/delete-product', [ProductController::class, 'ProductDelete'])->middleware([TokenVerificationMiddleware::class]);
 
 
-//After Authentication
+//Dashboard API
 Route::get('/total-customer', [DashboardController::class, 'TotalCustomer'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/total-category', [DashboardController::class, 'TotalCategory'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/total-product', [DashboardController::class, 'TotalProduct'])->middleware([TokenVerificationMiddleware::class]);

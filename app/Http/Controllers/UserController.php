@@ -165,6 +165,11 @@ class UserController extends Controller
 
     function UserUpdate(Request $request){
         $email=$request->header('email');
+
+        $request->validate([
+            'password' => 'required|min:5'
+            ]);
+
         User::where('email', '=', $email)->update([
             'firstName' => $request->input('firstName'),
             'lastName' => $request->input('lastName'),

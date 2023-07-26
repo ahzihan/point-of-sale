@@ -28,26 +28,34 @@
 <script>
 
   async function SubmitLogin() {
-            let email=document.getElementById('email').value;
-            let password=document.getElementById('password').value;
+        let email=document.getElementById('email').value.trim();
+        let password=document.getElementById('password').value.trim();
 
-            if(email.length===0){
-                errorToast("Email is required");
-            }
-            else if(password.length===0){
-                errorToast("Password is required");
+        let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if(email.length===0){
+            errorToast("Email is required");
+        }
+        else if(!email.match(mailformat)){
+            errorToast("Invalid Email Address");
+        }
+        else if(password.length===0){
+            errorToast("Password is required");
+        }
+        else if(password.length < 5){
+            errorToast("Password should be at least 5 character");
+        }
+        else{
+            showLoader();
+            let res=await axios.post("/user-login",{email:email, password:password});
+            hideLoader()
+            if(res.status===200 && res.data['status']==='success'){
+                window.location.href="/dashboard";
             }
             else{
-                showLoader();
-                let res=await axios.post("/user-login",{email:email, password:password});
-                hideLoader()
-                if(res.status===200 && res.data['status']==='success'){
-                    window.location.href="/dashboard";
-                }
-                else{
-                    errorToast(res.data['message']);
-                }
+                errorToast(res.data['message']);
             }
+        }
     }
 
 </script>

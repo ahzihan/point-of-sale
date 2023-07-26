@@ -77,9 +77,14 @@
         }
         else if(mobile.length===0){
             errorToast('Mobile is required')
+        }else if(mobile.length < 11){
+            errorToast("Password should be at least 11 character");
         }
         else if(password.length===0){
-            errorToast('Password is required')
+            errorToast("Password is required");
+        }
+        else if(password.length < 5){
+            errorToast("Password should be at least 5 character");
         }
         else{
             showLoader();

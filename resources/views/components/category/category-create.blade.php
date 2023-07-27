@@ -26,11 +26,11 @@
 
 <script>
 
-    $("#insertData").on('submit',async function (e) {
+    $("#insertData").on('submit', async function (e) {
         e.preventDefault();
 
         let categoryName = $('#categoryName').val();
-        alert(categoryName);
+
         if (categoryName.length === 0) {
             errorToast("Category Name Required !");
         } else {
@@ -38,6 +38,7 @@
             showLoader();
             let res = await axios.post("/create-category",{cat_name:categoryName})
             hideLoader();
+            alert(res);
             if(res.status===201){
                 successToast('Category Created Successfully!');
                 $("#insertData").trigger("reset");

@@ -27,6 +27,12 @@ class CustomerController extends Controller
         ]);
     }
 
+    function CustomerByID(Request $request){
+        $cus_id=$request->input('id');
+        $user_id=$request->header('id');
+        return Customer::where('id',$cus_id)->where('user_id',$user_id)->first();
+    }
+
     function CustomerUpdate(Request $request){
         $cus_id=$request->input('id');
         $user_id=$request->header('id');

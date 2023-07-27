@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
-    protected $fillable = ['unit_name'];
+    protected $fillable = ['unit_name','user_id'];
 }

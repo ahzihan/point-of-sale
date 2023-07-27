@@ -69,7 +69,7 @@ class UserController extends Controller
 
         if($user!==null){
 
-            $token=JWTToken::CreateToken($request->input('email'),$request->id);
+            $token=JWTToken::CreateToken($request->input('email'),$user->id);
             return response()->json([
                 "message"=>"User Login Successfully!",
                 "status"=>"success"

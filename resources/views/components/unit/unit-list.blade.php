@@ -47,10 +47,10 @@
       res.data.forEach(function (item,index) {
           let row=`<tr>
                     <td>${index+1}</td>
-                    <td>${item.unit_name}</td>
+                    <td>${item['unit_name']}</td>
                     <td>
-                        <button data-id="${item.id}" class="btn edit btn-sm btn-outline-success">Edit</button>
-                        <button data-id="${item.id}" class="btn delete btn-sm btn-outline-danger">Delete</button>
+                        <button data-id="${item['id']}" class="btn edit btn-sm btn-outline-success">Edit</button>
+                        <button data-id="${item['id']}" class="btn delete btn-sm btn-outline-danger">Delete</button>
                     </td>
                 </tr>`;
           tableList.append(row);

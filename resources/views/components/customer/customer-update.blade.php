@@ -1,11 +1,11 @@
 <div class="modal" id="update-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Customer</h5>
-            </div>
-            <div class="modal-body">
-                <form id="updateForm">
+        <form id="updateForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Customer</h5>
+                </div>
+                <div class="modal-body">
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
@@ -19,13 +19,13 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-close" class="btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                    <button onclick="Update()" id="update-btn" class="btn btn-sm  btn-success" >Update</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button id="update-modal" class="btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                <button onclick="Update()" id="update-btn" class="btn btn-sm  btn-success" >Update</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -37,22 +37,20 @@
     async function FillUpUpdateForm(id){
         $('#updateID').val(id);
         showLoader();
-        let res=await axios.post("/customer-by-id",{id:id})
+        let res=await axios.post("/update-customer",{id:id})
         hideLoader();
         $('#customerNameUpdate').val(res.data['name']);
         $('#customerEmailUpdate').val(res.data['email']);
         $('#customerMobileUpdate').val(res.data['mobile']);
     }
 
-
-
-    async function Update() {
+    $("#updateForm").on('submit',async function (e) {
+        e.preventDefault();
 
         let customerName = $('#customerNameUpdate').val();
         let customerEmail = $('#customerEmailUpdate').val();
         let customerMobile = $('#customerMobileUpdate').val();
         let updateID = $('#updateID').val();
-
 
         if (customerName.length === 0) {
             errorToast("Customer Name Required !");
@@ -67,7 +65,7 @@
 
             $('#update-modal').modal('hide');
             showLoader();
-            let res = await axios.post("/update-customer",{cus_name:customerName,email:customerEmail,mobile:customerMobile,id:updateID})
+            let res = await axios.post("/edit-customer",{cus_name:customerName,email:customerEmail,mobile:customerMobile,id:updateID})
             hideLoader();
 
             if(res.status===200 && res.data===1){
@@ -79,6 +77,7 @@
                 errorToast("Request fail !");
             }
         }
-    }
+
+    });
 
 </script>

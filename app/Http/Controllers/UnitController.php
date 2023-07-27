@@ -21,8 +21,15 @@ class UnitController extends Controller
     function UnitCreate(Request $request){
         $user_id=$request->header('id');
         return Unit::create([
-            'unit_name'=>$request->input('unit_name')
+            'unit_name'=>$request->input('unit_name'),
+            'user_id'=>$user_id
         ]);
+    }
+
+    function UnitByID(Request $request){
+        $unit_id=$request->input('id');
+        $user_id=$request->header('id');
+        return Unit::where('id',$unit_id)->where('user_id',$user_id)->first();
     }
 
     function UnitUpdate(Request $request){

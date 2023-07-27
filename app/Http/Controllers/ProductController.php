@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+
+    function ProductPage():View{
+        return view('pages.dashboard.product-page');
+    }
+
+
     function ProductCreate(Request $request)
     {
         $user_id=$request->header('id');

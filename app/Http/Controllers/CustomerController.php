@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    function CustomerPage():View{
+        return view('pages.dashboard.customer-page');
+    }
+
     function CustomerList(Request $request){
         $user_id=$request->header('id');
         return Customer::where('user_id',$user_id)->get();

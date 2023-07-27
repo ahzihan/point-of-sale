@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Unit;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller
 {
+
+    function UnitPage():View{
+        return view('pages.dashboard.unit-page');
+    }
+
     function UnitList(Request $request){
         $user_id=$request->header('id');
         return Unit::where('user_id',$user_id)->get();

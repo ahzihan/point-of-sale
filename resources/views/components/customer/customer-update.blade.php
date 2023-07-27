@@ -22,7 +22,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="modal-close" class="btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                    <button onclick="Update()" id="update-btn" class="btn btn-sm  btn-success" >Update</button>
+                    <button class="btn btn-sm  btn-success" >Update</button>
                 </div>
             </div>
         </form>
@@ -37,9 +37,9 @@
     async function FillUpUpdateForm(id){
         $('#updateID').val(id);
         showLoader();
-        let res=await axios.post("/update-customer",{id:id})
+        let res=await axios.post("/edit-customer",{id:id})
         hideLoader();
-        $('#customerNameUpdate').val(res.data['name']);
+        $('#customerNameUpdate').val(res.data['cus_name']);
         $('#customerEmailUpdate').val(res.data['email']);
         $('#customerMobileUpdate').val(res.data['mobile']);
     }
@@ -65,7 +65,7 @@
 
             $('#update-modal').modal('hide');
             showLoader();
-            let res = await axios.post("/edit-customer",{cus_name:customerName,email:customerEmail,mobile:customerMobile,id:updateID})
+            let res = await axios.post("/update-customer",{cus_name:customerName,email:customerEmail,mobile:customerMobile,id:updateID})
             hideLoader();
 
             if(res.status===200 && res.data===1){

@@ -17,7 +17,7 @@
                 </div>
                 <div class="modal-footer">
                     <button  class="btn  btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                    <button  type="submit" class="btn btn-sm  btn-success" >Save</button>
+                    <button type="submit" class="btn btn-sm  btn-success" >Save</button>
                 </div>
             </div>
         </form>
@@ -36,16 +36,16 @@
         } else {
             $('#create-modal').modal('hide');
             showLoader();
-            let res = await axios.post("/create-category",{cat_name:categoryName})
+            let res = await axios.post("/create-category",{cat_name:categoryName});
             hideLoader();
-            alert(res);
+
             if(res.status===201){
                 successToast('Category Created Successfully!');
                 $("#insertData").trigger("reset");
                 await getList();
             }
             else{
-                errorToast("Request fail !")
+                errorToast("Request fail !");
             }
 
         }

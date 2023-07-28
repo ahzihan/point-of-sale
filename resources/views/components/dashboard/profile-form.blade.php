@@ -50,11 +50,11 @@
 
         if(res.status===200 && res.data['status']==='success'){
             let data=res.data['data'];
-            document.getElementById('email').value=data['email'];
-            document.getElementById('firstName').value=data['firstName'];
-            document.getElementById('lastName').value=data['lastName'];
-            document.getElementById('mobile').value=data['mobile'];
-            document.getElementById('password').value=data['password'];
+            $('#email').val(data['email']);
+            $('#firstName').val(data['firstName']);
+            $('#lastName').val(data['lastName']);
+            $('#mobile').val(data['mobile']);
+            $('#password').val(data['password']);
         }else{
             errorToast(res.data['message']);
         }
@@ -63,10 +63,10 @@
   async function onUpdateProfile() {
 
 
-        let firstName = document.getElementById('firstName').value;
-        let lastName = document.getElementById('lastName').value;
-        let mobile = document.getElementById('mobile').value;
-        let password = document.getElementById('password').value;
+        let firstName = $('#firstName').val();
+        let lastName = $('#lastName').val();
+        let mobile = $('#mobile').val();
+        let password = $('#password').val();
 
 
         if(firstName.length===0){
@@ -78,7 +78,7 @@
         else if(mobile.length===0){
             errorToast('Mobile is required')
         }else if(mobile.length < 11){
-            errorToast("Password should be at least 11 character");
+            errorToast("Mobile should be at least 11 character");
         }
         else if(password.length===0){
             errorToast("Password is required");

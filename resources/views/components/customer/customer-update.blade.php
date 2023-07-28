@@ -32,8 +32,6 @@
 
 <script>
 
-
-
     async function FillUpUpdateForm(id){
         $('#updateID').val(id);
         showLoader();

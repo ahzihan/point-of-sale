@@ -74,7 +74,6 @@ Route::post('/update-unit', [UnitController::class, 'UnitUpdate'])->middleware([
 Route::post('/delete-unit', [UnitController::class, 'UnitDelete'])->middleware([TokenVerificationMiddleware::class]);
 
 
-
 //Product Api
 Route::get('/list-product', [ProductController::class, 'ProductList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/create-product', [ProductController::class, 'ProductCreate'])->middleware([TokenVerificationMiddleware::class]);

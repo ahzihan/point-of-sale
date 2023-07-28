@@ -57,14 +57,16 @@
       });
 
 
-      $('.edit').on('click',function () {
+      $('.edit').on('click',async function () {
           let id=$(this).data('id');
-          alert(id);
+          await FillUpUpdateForm(id);
+          $("#update-modal").modal('show');
       });
 
       $('.delete').on('click',function () {
           let id=$(this).data('id');
-          alert(id);
+          $("#delete-modal").modal('show');
+          $("#deleteID").val(id);
       });
 
       tableData.DataTable({

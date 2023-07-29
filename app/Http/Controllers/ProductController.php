@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Unit;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -17,11 +19,12 @@ class ProductController extends Controller
 
     function ProductCreate(Request $request)
     {
+        // dd($request->file('img_url'));
         $user_id=$request->header('id');
 
         // Prepare File Name & Path
 
-        $img=$request->file('img');
+        $img=$request->file('img_url');
         $t=time();
         $file_name=$img->getClientOriginalName();
         $img_name="{$user_id}-{$t}-{$file_name}";
@@ -45,7 +48,19 @@ class ProductController extends Controller
     function ProductList(Request $request)
     {
         $user_id=$request->header('id');
-        return Product::where('user_id',$user_id)->get();
+        return Product::with('unit')->where('user_id',$user_id)->get();
+    }
+
+    function ProductCategory(Request $request)
+    {
+        $user_id=$request->header('id');
+        return Category::where('user_id',$user_id)->get();
+    }
+
+    function ProductUnit(Request $request)
+    {
+        $user_id=$request->header('id');
+        return Unit::where('user_id',$user_id)->get();
     }
 
     function ProductUpdate(Request $request){

@@ -16,8 +16,8 @@
                         <tr class="bg-light">
                             <th>Icon</th>
                             <th>Name</th>
-                            <th>Price</th>
                             <th>Unit</th>
+                            <th>Price</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -49,10 +49,10 @@
 
         res.data.forEach(function (item, index) {
             let row = `<tr>
-                    <td><img alt="" class="w-20" src="/${item['img_url']}"></td>
+                    <td><img alt="" class="w-75" src="/${item['img_url']}"></td>
                     <td>${item['name']}</td>
+                    <td>${item.unit['unit_name']}</td>
                     <td>${item['price']}</td>
-                    <td>${item['unit']}</td>
                     <td>
                         <button data-id="${item['id']}" class="btn edit btn-sm btn-outline-success">Edit</button>
                         <button data-id="${item['id']}" class="btn delete btn-sm btn-outline-danger">Delete</button>
@@ -64,7 +64,7 @@
 
         $('.edit').on('click', function () {
             let id = $(this).data('id');
-            await FillUpUpdateForm(id);
+            FillUpUpdateForm(id);
             $("#update-modal").modal('show');
         });
 
@@ -84,5 +84,6 @@
             }
         });
     }
+
 
 </script>

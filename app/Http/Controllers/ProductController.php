@@ -51,16 +51,12 @@ class ProductController extends Controller
         return Product::with('unit')->where('user_id',$user_id)->get();
     }
 
-    function ProductCategory(Request $request)
+    function ProductByID(Request $request)
     {
         $user_id=$request->header('id');
-        return Category::where('user_id',$user_id)->get();
-    }
+        $product_id = $request->input('id');
 
-    function ProductUnit(Request $request)
-    {
-        $user_id=$request->header('id');
-        return Unit::where('user_id',$user_id)->get();
+        return Product::where('user_id',$user_id)->find($product_id);
     }
 
     function ProductUpdate(Request $request){
@@ -68,10 +64,10 @@ class ProductController extends Controller
         $user_id=$request->header('id');
         $product_id=$request->input('id');
 
-        if ($request->hasFile('img')) {
+        if ($request->hasFile('img_url')) {
 
             // Upload New File
-            $img=$request->file('img');
+            $img=$request->file('img_url');
             $t=time();
             $file_name=$img->getClientOriginalName();
             $img_name="{$user_id}-{$t}-{$file_name}";

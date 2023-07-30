@@ -1,6 +1,6 @@
 <div class="modal" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
-        <form id="insertData" enctype="multipart/form-data">
+        <form id="insertData">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Create Product</h5>
@@ -12,18 +12,18 @@
                                 <label class="form-label">Product Name *</label>
                                 <input type="text" class="form-control" id="name">
                                 <label class="form-label">Category *</label>
-                                <select class="form-control" name="cat_id" id="cat_id">
+                                <select class="form-control" name="cat_id" id="categoryID">
                                     <option value="">Select Category</option>
                                 </select>
                                 <label class="form-label">Unit</label>
-                                <select class="form-control" name="unit_id" id="unit_id">
+                                <select class="form-control" name="unit_id" id="unitID">
                                     <option value="">Select Unit</option>
                                 </select>
                                 <label class="form-label">Price *</label>
                                 <input type="text" class="form-control" id="price">
                                 <label class="form-label">Category</label>
                                 <label class="form-label">Image *</label>
-                                <input type="file" class="form-control" id="img_url">
+                                <input type="file" class="form-control" id="productImg">
                             </div>
                         </div>
                     </div>
@@ -43,44 +43,31 @@
         getUnit();
         getCategory();
 
-    async function getUnit() {
-
-        showLoader();
-        let res = await axios.get("/product-unit");
-        hideLoader();
-
-        let unit_id = $('#unit_id');
-
-        res.data.forEach(function (item, index) {
-            let row = `<option value="${item['id']}">${item['unit_name']}</option>`;
-            unit_id.append(row);
-        });
-
+    async function getUnit(){
+        let res = await axios.get("/list-unit")
+        res.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['unit_name']}</option>`
+            $("#unitID").append(option);
+        })
     }
 
-    async function getCategory() {
-
-        showLoader();
-        let res = await axios.get("/product-category");
-        hideLoader();
-
-        let cat_id = $('#cat_id');
-
-        res.data.forEach(function (item, index) {
-            let row = `<option value="${item['id']}">${item['cat_name']}</option>`;
-            cat_id.append(row);
-        });
-
+    async function getCategory(){
+        let res = await axios.get("/list-category")
+        res.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['cat_name']}</option>`
+            $("#categoryID").append(option);
+        })
     }
+
 
     $("#insertData").on('submit',async function (e) {
         e.preventDefault();
 
         let name = $('#name').val();
         let price = $('#price').val();
-        let cat_id = $('#cat_id').val();
-        let unit_id = $('#cat_id').val();
-        let img_url = $('#img_url').val();
+        let cat_id = $('#categoryID').val();
+        let unit_id = $('#unitID').val();
+        let img_url = $('#productImg').files[0];
 
         if (name.length === 0) {
             errorToast("Product Name Required !");
@@ -93,11 +80,24 @@
         }
         else if(unit_id.length===0){
             errorToast("Product Unit Required !");
+        }else if(!img_url){
+            errorToast("Image Field Required !");
         } else {
             $('#create-modal').modal('hide');
-            let formData={name:name,price:price,cat_id:cat_id,unit_id:unit_id,img_url:img_url}
+            let formData=new FormData();
+            formData.append('img_url',img_url)
+            formData.append('name',name)
+            formData.append('price',price)
+            formData.append('cat_id',cat_id)
+            formData.append('unit_id',unit_id)
+
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }
             showLoader();
-            let res = await axios.post("/create-product",formData);
+            let res = await axios.post("/create-product",formData,config);
             hideLoader();
             if(res.status===201){
                 successToast('Product Created Successfully!');

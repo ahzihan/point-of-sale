@@ -80,8 +80,6 @@ Route::post('/create-product', [ProductController::class, 'ProductCreate'])->mid
 Route::post('/edit-product', [ProductController::class, 'ProductByID'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/update-product', [ProductController::class, 'ProductUpdate'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/delete-product', [ProductController::class, 'ProductDelete'])->middleware([TokenVerificationMiddleware::class]);
-Route::get('/product-category', [ProductController::class, 'ProductCategory'])->middleware([TokenVerificationMiddleware::class]);
-Route::get('/product-unit', [ProductController::class, 'ProductUnit'])->middleware([TokenVerificationMiddleware::class]);
 
 
 //Dashboard API

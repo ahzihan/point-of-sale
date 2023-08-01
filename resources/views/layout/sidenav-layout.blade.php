@@ -91,9 +91,9 @@
     </a>
 
 
-    <a href="#Getting-Started" class="side-bar-item">
+    <a href="{{url("/salePage")}}" class="side-bar-item">
         <i class="fa fa-chevron-circle-right  text-dark"></i>
-        <span class="side-bar-item-caption">Invoice</span>
+        <span class="side-bar-item-caption">Sale</span>
     </a>
 
     <a href="#Getting-Started" class="side-bar-item">

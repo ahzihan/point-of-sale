@@ -21,10 +21,15 @@
                                 </select>
                                 <label class="form-label">Price *</label>
                                 <input type="text" class="form-control" id="productPriceUpdate">
+                                <br/>
+                                <img class="w-25" id="oldImg" src="{{asset('images/default.jpg')}}"/>
+                                <br/>
                                 <label class="form-label">Category</label>
                                 <label class="form-label">Image *</label>
-                                <input type="file" class="form-control" id="productImgUpdate">
+                                <input oninput="oldImg.src=window.URL.createObjectURL(this.files[0])"  type="file" class="form-control" id="productImgUpdate">
+
                                 <input type="text" class="d-none" id="updateID">
+                                <input type="text" class="d-none" id="filePath">
                             </div>
                         </div>
                     </div>
@@ -40,8 +45,6 @@
 
 
 <script>
-
-
 
     async function getUnit(){
         let res = await axios.get("/list-unit")
@@ -59,8 +62,12 @@
         })
     }
 
-    async function FillUpUpdateForm(id){
+    async function FillUpUpdateForm(id,filePath){
+
         $('#updateID').val(id);
+        $('#filePath').val(filePath);
+        document.getElementById('oldImg').src=filePath;
+
         showLoader();
         await getUnit();
         await getCategory();
@@ -70,6 +77,7 @@
         $('#productPriceUpdate').val(res.data['price']);
         $('#categoryUpdate').val(res.data['cat_id']);
         $('#unitUpdate').val(res.data['unit_id']);
+
     }
 
 
@@ -80,6 +88,8 @@
         let price = $('#productPriceUpdate').val();
         let cat_id = $('#categoryUpdate').val();
         let unit_id = $('#unitUpdate').val();
+        let updateID=$('#updateID').val();
+        let filePath=$('#filePath').val();
         let img_url = document.getElementById('productImgUpdate').files[0];
 
         if (name.length === 0) {
@@ -95,12 +105,14 @@
             errorToast("Product Unit Required !");
         } else {
             $('#update-modal').modal('hide');
-            let updateFormData=new FormData();
-            updateFormData.append('img_url',img_url)
-            updateFormData.append('name',name)
-            updateFormData.append('price',price)
-            updateFormData.append('cat_id',cat_id)
-            updateFormData.append('unit_id',unit_id)
+            let formData=new FormData();
+            formData.append('img_url',img_url)
+            formData.append('name',name)
+            formData.append('price',price)
+            formData.append('cat_id',cat_id)
+            formData.append('unit_id',unit_id)
+            formData.append('file_path',filePath)
+            formData.append('id',updateID)
 
             const config = {
                 headers: {
@@ -108,12 +120,12 @@
                 }
             }
             showLoader();
-            let res = await axios.post("/update-product",updateFormData,config);
+            let res = await axios.post("/update-product",formData,config);
             hideLoader();
             if(res.status===200 && res.data===1){
                 successToast('Product Updated Successfully!');
                 $("#updateForm").trigger("reset");
-                await getList();
+                getList();
             }
             else{
                 errorToast("Request fail !");

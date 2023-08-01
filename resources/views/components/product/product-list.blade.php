@@ -48,14 +48,15 @@
 
 
         res.data.forEach(function (item, index) {
+            console.log(item);
             let row = `<tr>
-                    <td><img alt="" class="w-75" src="/${item['img_url']}"></td>
+                    <td><img alt="" class="w-75" src="${item['img_url']}"></td>
                     <td>${item['name']}</td>
                     <td>${item.unit['unit_name']}</td>
                     <td>${item['price']}</td>
                     <td>
-                        <button data-id="${item['id']}" class="btn edit btn-sm btn-outline-success">Edit</button>
-                        <button data-id="${item['id']}" class="btn delete btn-sm btn-outline-danger">Delete</button>
+                        <button data-id="${item['id']}" data-path="${item['img_url']}" class="btn edit btn-sm btn-outline-success">Edit</button>
+                        <button data-id="${item['id']}" data-path="${item['img_url']}" class="btn delete btn-sm btn-outline-danger">Delete</button>
                     </td>
                 </tr>`;
             tableList.append(row);
@@ -64,14 +65,18 @@
 
         $('.edit').on('click', function () {
             let id = $(this).data('id');
-            FillUpUpdateForm(id);
+            let filePath= $(this).data('path');
+            FillUpUpdateForm(id,filePath);
             $("#update-modal").modal('show');
         });
 
         $('.delete').on('click', function () {
             let id = $(this).data('id');
+            let path= $(this).data('path');
+
             $("#delete-modal").modal('show');
             $("#deleteID").val(id);
+            $("#deleteFilePath").val(path);
         });
 
         tableData.DataTable({

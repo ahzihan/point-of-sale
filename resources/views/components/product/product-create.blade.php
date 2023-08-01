@@ -67,7 +67,7 @@
         let price = $('#price').val();
         let cat_id = $('#categoryID').val();
         let unit_id = $('#unitID').val();
-        let img_url = $('#productImg').files[0];
+        let img_url = document.getElementById('productImg').files[0];
 
         if (name.length === 0) {
             errorToast("Product Name Required !");
@@ -102,7 +102,7 @@
             if(res.status===201){
                 successToast('Product Created Successfully!');
                 $("#insertData").trigger("reset");
-                await getList();
+                getList();
             }
             else{
                 errorToast("Request fail !");

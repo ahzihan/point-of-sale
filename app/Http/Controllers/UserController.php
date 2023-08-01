@@ -36,8 +36,6 @@ class UserController extends Controller
     }
 
 
-
-
     public function UserRegistration(Request $request){
 
         try{

@@ -1,5 +1,5 @@
 <div class="modal" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <form id="insertData">
             <div class="modal-content">
                 <div class="modal-header">
@@ -21,9 +21,13 @@
                                 </select>
                                 <label class="form-label">Price *</label>
                                 <input type="text" class="form-control" id="price">
-                                <label class="form-label">Category</label>
+
+                                <br/>
+                                <img class="w-15" id="newImg" src="{{asset('images/default.jpg')}}"/>
+                                <br/>
+
                                 <label class="form-label">Image *</label>
-                                <input type="file" class="form-control" id="productImg">
+                                <input oninput="newImg.src=window.URL.createObjectURL(this.files[0])" type="file" class="form-control" id="productImg">
                             </div>
                         </div>
                     </div>
@@ -60,7 +64,7 @@
     }
 
 
-    $("#insertData").on('submit',async function (e) {
+    $("#insertData").on('submit', async function (e) {
         e.preventDefault();
 
         let name = $('#name').val();
@@ -83,7 +87,9 @@
         }else if(!img_url){
             errorToast("Image Field Required !");
         } else {
+
             $('#create-modal').modal('hide');
+
             let formData=new FormData();
             formData.append('img_url',img_url)
             formData.append('name',name)
@@ -96,9 +102,11 @@
                     'content-type': 'multipart/form-data'
                 }
             }
+
             showLoader();
             let res = await axios.post("/create-product",formData,config);
             hideLoader();
+
             if(res.status===201){
                 successToast('Product Created Successfully!');
                 $("#insertData").trigger("reset");

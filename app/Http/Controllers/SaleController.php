@@ -17,8 +17,8 @@ class SaleController extends Controller
         return view('pages.dashboard.sale-page');
     }
 
-    function SaleDetailPage():View{
-        return view('pages.dashboard.sale-detail-page');
+    function InvoicePage():View{
+        return view('pages.dashboard.invoice-page');
     }
 
 
@@ -52,6 +52,7 @@ class SaleController extends Controller
             foreach ($products as $item) {
                 SaleDetail::create([
                     'sale_id' => $saleID,
+                    'user_id'=>$user_id,
                     'product_id' => $item['product_id'],
                     'qty' =>  $item['qty'],
                     'sale_price'=>  $item['sale_price']
@@ -76,7 +77,7 @@ class SaleController extends Controller
         $user_id=$request->header('id');
         $customerDetails=Customer::where('user_id',$user_id)->where('id',$request->input('cus_id'))->first();
         $saleTotal=Sale::where('user_id',$user_id)->where('id',$request->input('sale_id'))->first();
-        $saleProduct=SaleDetail::where('sale_id',$request->input('sale_id'))->get();
+        $saleProduct=SaleDetail::where('sale_id',$request->input('sale_id'))->where('user_id',$user_id)->with('product')->get();
 
         return array(
             'customer'=>$customerDetails,
@@ -89,7 +90,8 @@ class SaleController extends Controller
         DB::beginTransaction();
 
         try{
-            SaleDetail::where('sale_id',$request->input('sale_id'))->delete();
+            $user_id=$request->header('id');
+            SaleDetail::where('sale_id',$request->input('sale_id'))->where('user_id',$user_id)->delete();
             Sale::where('id',$request->input('sale_id'))->delete();
 
             DB::commit();

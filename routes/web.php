@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
@@ -45,7 +46,9 @@ Route::get('/categoryPage', [CategoryController::class, 'CategoryPage'])->middle
 Route::get('/unitPage', [UnitController::class, 'UnitPage'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/productPage', [ProductController::class, 'ProductPage'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/salePage',[SaleController::class,'SalePage'])->middleware([TokenVerificationMiddleware::class]);
-Route::get('/saleDetailPage',[SaleController::class,'SaleDetailPage'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/invoicePage',[SaleController::class,'InvoicePage'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/reportPage', [ReportController::class, 'ReportPage'])->middleware([TokenVerificationMiddleware::class]);
+
 
 
 //After Authentication
@@ -96,6 +99,12 @@ Route::post("/sale-create",[SaleController::class,'SaleCreate'])->middleware([To
 Route::get("/sale-select",[SaleController::class,'SaleSelect'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/sale-details",[SaleController::class,'SaleDetails'])->middleware([TokenVerificationMiddleware::class]);
 Route::get("/sale-delete",[SaleController::class,'SaleDelete'])->middleware([TokenVerificationMiddleware::class]);
+
+// SUMMARY & Report
+Route::get("/summary", [DashboardController::class, 'Summary'])->middleware([TokenVerificationMiddleware::class]);
+Route::get("/sales-report/{FormDate}/{ToDate}", [ReportController::class, 'SalesReport'])->middleware([TokenVerificationMiddleware::class]);
+
+
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Sale;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 
@@ -14,18 +15,28 @@ class DashboardController extends Controller
         return view('pages.dashboard.dashboard-page');
     }
 
-    function TotalCustomer(Request $request){
-        $id=$request->header('id');
-        return Customer::where('user_id',$id)->count();
-    }
+    function Summary(Request $request):array{
+        $user_id=$request->header('id');
+        $product= Product::where('user_id',$user_id)->count();
+        $Category= Category::where('user_id',$user_id)->count();
+        $Customer=Customer::where('user_id',$user_id)->count();
+        $Sale= Sale::where('user_id',$user_id)->count();
+        $total=  Sale::where('user_id',$user_id)->sum('total');
+        $vat= Sale::where('user_id',$user_id)->sum('vat');
+        $sd= Sale::where('user_id',$user_id)->sum('sd');
+        $payable =Sale::where('user_id',$user_id)->sum('payable');
 
-    function TotalCategory(Request $request){
-        $id=$request->header('id');
-        return Category::where('user_id',$id)->count();
-    }
+        return[
+            'product'=> $product,
+            'category'=> $Category,
+            'customer'=> $Customer,
+            'sale'=> $Sale,
+            'total'=> round($total,2),
+            'vat'=> round($vat,2),
+            'sd'=> round($sd,2),
+            'payable'=> round($payable,2)
+        ];
 
-    function TotalProduct(Request $request){
-        $id=$request->header('id');
-        return Product::where('user_id',$id)->count();
+
     }
 }

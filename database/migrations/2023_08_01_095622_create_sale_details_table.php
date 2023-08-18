@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('sale_id');
             $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->string('qty',50);
             $table->string('sale_price',50);
@@ -23,6 +24,9 @@ return new class extends Migration
                 ->cascadeOnUpdate()->restrictOnDelete();
 
             $table->foreign('product_id')->references('id')->on('products')
+                ->cascadeOnUpdate()->restrictOnDelete();
+
+            $table->foreign('user_id')->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
 
 

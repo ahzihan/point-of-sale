@@ -17,11 +17,11 @@
 </div>
 
 <script>
-     async  function  itemDelete(){
-        let id=document.getElementById('deleteID').value;
-        document.getElementById('delete-modal').click();
+     async function  itemDelete(){
+        let id=$('#deleteID').val();
+        $('#delete-modal').click();
         showLoader();
-        let res=await axios.post("/sale-delete",{inv_id:id})
+        let res=await axios.post("/sale-delete",{inv_id:id});
         hideLoader();
         if(res.data===1){
             successToast("Request completed")

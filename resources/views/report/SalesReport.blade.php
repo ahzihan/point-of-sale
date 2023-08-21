@@ -75,9 +75,9 @@
     <tbody>
     @foreach ($list as $item)
         <tr>
-            <td>{{$item->customer->name}}</td>
-            <td>{{$item->customer->mobile}}</td>
-            <td>{{$item->customer->email}}</td>
+            <td>{{$item->cus_name}}</td>
+            <td>{{$item->mobile}}</td>
+            <td>{{$item->email}}</td>
             <td>{{$item->total }}</td>
             <td>{{$item->discount }}</td>
             <td>{{$item->vat }}</td>

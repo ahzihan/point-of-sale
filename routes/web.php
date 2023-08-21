@@ -98,7 +98,7 @@ Route::get('/total-product', [DashboardController::class, 'TotalProduct'])->midd
 Route::post("/sale-create",[SaleController::class,'SaleCreate'])->middleware([TokenVerificationMiddleware::class]);
 Route::get("/sale-select",[SaleController::class,'SaleSelect'])->middleware([TokenVerificationMiddleware::class]);
 Route::post("/sale-details",[SaleController::class,'SaleDetails'])->middleware([TokenVerificationMiddleware::class]);
-Route::get("/sale-delete",[SaleController::class,'SaleDelete'])->middleware([TokenVerificationMiddleware::class]);
+Route::post("/sale-delete",[SaleController::class,'SaleDelete'])->middleware([TokenVerificationMiddleware::class]);
 
 // SUMMARY & Report
 Route::get("/summary", [DashboardController::class, 'Summary'])->middleware([TokenVerificationMiddleware::class]);

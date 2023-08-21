@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use Exception;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -73,16 +74,26 @@ class SaleController extends Controller
     //     return Sale::where('user_id',$user_id)->with('customer')->get();
     // }
 
+
     function SaleSelect(Request $request){
-        $user_id=$request->header('id');
-        $saleList=DB::table('sales')
-        ->join('customers', 'sales.cus_id', '=', 'customers.id')->where('sales.user_id', '=', $user_id)->get();
+        $user_id = $request->header('id');
+
+        $saleList = DB::table('sales')
+        ->join('customers', 'sales.cus_id', '=', 'customers.id')
+        ->where('sales.user_id', '=', $user_id)
+        ->select('sales.*','customers.cus_name','customers.mobile')
+        ->get();
+
         return $saleList;
     }
+
+
+
 
     function SaleDetails(Request $request){
 
         $user_id=$request->header('id');
+
         $customerDetails=Customer::where('user_id',$user_id)->where('id',$request->input('cus_id'))->first();
         $saleTotal=Sale::where('user_id',$user_id)->where('id',$request->input('inv_id'))->first();
         $saleProduct=SaleDetail::where('sale_id',$request->input('inv_id'))->where('user_id',$user_id)->with('product')->get();
@@ -99,8 +110,8 @@ class SaleController extends Controller
 
         try{
             $user_id=$request->header('id');
-            SaleDetail::where('sale_id',$request->input('sale_id'))->where('user_id',$user_id)->delete();
-            Sale::where('id',$request->input('sale_id'))->delete();
+            SaleDetail::where('sale_id',$request->input('inv_id'))->where('user_id',$user_id)->delete();
+            Sale::where('id',$request->input('inv_id'))->delete();
 
             DB::commit();
             return 1;

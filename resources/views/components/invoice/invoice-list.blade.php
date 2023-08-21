@@ -51,8 +51,9 @@ async function getList() {
 
     tableData.DataTable().destroy();
     tableList.empty();
-
+console.log(res.data);
     res.data.forEach(function (item,index) {
+
         let row=`<tr>
                     <td>${index+1}</td>
                     <td>${item['cus_name']}</td>
@@ -78,7 +79,7 @@ async function getList() {
 
     $('.deleteBtn').on('click',function () {
         let id= $(this).data('id');
-        document.getElementById('deleteID').value=id;
+        $('#deleteID').val(id);
         $("#delete-modal").modal('show');
     })
 

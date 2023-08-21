@@ -15,7 +15,7 @@ class Sale extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    function sale_detail():HasMany{
-        return $this->hasMany(SaleDetail::class);
-    }
+    // function sale_detail():HasMany{
+    //     return $this->hasMany(SaleDetail::class);
+    // }
 }

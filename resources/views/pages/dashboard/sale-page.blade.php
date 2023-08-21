@@ -275,15 +275,15 @@
 
             })
 
-            // new DataTable('#customerTable',{
-            //     order:[[0,'desc']],
-            //     scrollCollapse: false,
-            //     info: false,
-            //     lengthChange: false
-            // });
-            new DataTable('#productTable',{
-                order:[[0,'desc']],
-                lengthMenu:[5,10,15,20,30]
+            customerTable.DataTable({
+                order: [[0, 'desc']],
+                lengthMenu: [10,15,20,25,30,35,40,45,50],
+                language:{
+                    paginate:{
+                        next: '&#8594;', // or '→'
+                        previous: '&#8592;' // or '←'
+                    }
+                }
             });
         }
 
@@ -312,22 +312,20 @@
             })
 
 
-            // new DataTable('#productTable',{
-            //     order:[[0,'desc']],
-            //     scrollCollapse: false,
-            //     info: false,
-            //     lengthChange: false
-            // });
-
-            new DataTable('#productTable',{
-                order:[[0,'desc']],
-                lengthMenu:[5,10,15,20,30]
+            productTable.DataTable({
+                order: [[0, 'desc']],
+                lengthMenu: [10,15,20,25,30,35,40,45,50],
+                language:{
+                    paginate:{
+                        next: '&#8594;', // or '→'
+                        previous: '&#8592;' // or '←'
+                    }}
             });
         }
 
 
 
-      async  function createInvoice() {
+      async function createInvoice() {
             let total=document.getElementById('total').innerText;
             let discount=document.getElementById('discount').innerText;
             let vat=document.getElementById('vat').innerText;
@@ -354,7 +352,7 @@
             }
             else{
                 showLoader();
-                let res= axios.post("/sale-create",Data);
+                let res=await axios.post("/sale-create",Data);
                 hideLoader();
 
                 if(res.data===1){

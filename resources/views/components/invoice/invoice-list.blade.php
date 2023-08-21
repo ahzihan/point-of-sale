@@ -55,16 +55,16 @@ async function getList() {
     res.data.forEach(function (item,index) {
         let row=`<tr>
                     <td>${index+1}</td>
-                    <td>${item['customer']['cus_name']}</td>
-                    <td>${item['customer']['mobile']}</td>
+                    <td>${item['cus_name']}</td>
+                    <td>${item['mobile']}</td>
                     <td>${item['total']}</td>
                     <td>${item['vat']}</td>
                     <td>${item['sd']}</td>
                     <td>${item['discount']}</td>
                     <td>${item['payable']}</td>
                     <td>
-                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm fa-eye"></i></button>
-                        <button data-id="${item['id']}" data-cus="${item['customer']['id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm  fa-trash-alt"></i></button>
+                        <button data-id="${item['id']}" data-cus="${item['cus_id']}" class="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm fa-eye"></i></button>
+                        <button data-id="${item['id']}" data-cus="${item['cus_id']}" class="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"><i class="fa text-sm  fa-trash-alt"></i></button>
                     </td>
                  </tr>`
         tableList.append(row)
@@ -73,7 +73,7 @@ async function getList() {
     $('.viewBtn').on('click', async function () {
         let id= $(this).data('id');
         let cus= $(this).data('cus');
-        await InvoiceDetails(cus,id)
+        await InvoiceDetails(cus,id);
     })
 
     $('.deleteBtn').on('click',function () {
@@ -82,10 +82,15 @@ async function getList() {
         $("#delete-modal").modal('show');
     })
 
-    new DataTable('#tableData',{
-        order:[[0,'desc']],
-        lengthMenu:[5,10,15,20,30]
-    });
+    tableData.DataTable({
+          order: [[0, 'desc']],
+          lengthMenu: [10,15,20,25,30,35,40,45,50],
+          language:{
+            paginate:{
+                next: '&#8594;', // or '→'
+                previous: '&#8592;' // or '←'
+            }}
+      });
 
 }
 

@@ -68,16 +68,24 @@ class SaleController extends Controller
         }
     }
 
+    // function SaleSelect(Request $request){
+    //     $user_id=$request->header('id');
+    //     return Sale::where('user_id',$user_id)->with('customer')->get();
+    // }
+
     function SaleSelect(Request $request){
         $user_id=$request->header('id');
-        return Sale::where('user_id',$user_id)->with('customer')->get();
+        $saleList=DB::table('sales')
+        ->join('customers', 'sales.cus_id', '=', 'customers.id')->where('sales.user_id', '=', $user_id)->get();
+        return $saleList;
     }
 
     function SaleDetails(Request $request){
+
         $user_id=$request->header('id');
         $customerDetails=Customer::where('user_id',$user_id)->where('id',$request->input('cus_id'))->first();
-        $saleTotal=Sale::where('user_id',$user_id)->where('id',$request->input('sale_id'))->first();
-        $saleProduct=SaleDetail::where('sale_id',$request->input('sale_id'))->where('user_id',$user_id)->with('product')->get();
+        $saleTotal=Sale::where('user_id',$user_id)->where('id',$request->input('inv_id'))->first();
+        $saleProduct=SaleDetail::where('sale_id',$request->input('inv_id'))->where('user_id',$user_id)->with('product')->get();
 
         return array(
             'customer'=>$customerDetails,

@@ -70,7 +70,7 @@
         hideLoader();
 
 
-        $('#CName').text(res.data['customer']['name']);
+        $('#CName').text(res.data['customer']['cus_name']);
         $('#CId').text(res.data['customer']['user_id']);
         $('#CEmail').text(res.data['customer']['email']);
         $('#total').text(res.data['sale']['total']);

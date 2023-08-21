@@ -51,7 +51,7 @@ async function getList() {
 
     tableData.DataTable().destroy();
     tableList.empty();
-console.log(res.data);
+
     res.data.forEach(function (item,index) {
 
         let row=`<tr>

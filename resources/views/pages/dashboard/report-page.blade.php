@@ -22,8 +22,8 @@
 <script>
 
     function SalesReport() {
-        let FormDate = document.getElementById('FormDate').value;
-        let ToDate = document.getElementById('ToDate').value;
+        let FormDate = $('#FormDate').val();
+        let ToDate = $('#ToDate').val();
 
         if(FormDate.length === 0 || ToDate.length === 0){
             errorToast("Date Range Required !")

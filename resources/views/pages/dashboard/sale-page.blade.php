@@ -203,19 +203,19 @@
              Payable=(parseFloat(Total)+parseFloat(Vat)+parseFloat(Sd)).toFixed(2);
 
 
-            document.getElementById('total').innerText=Total;
-            document.getElementById('payable').innerText=Payable;
-            document.getElementById('vat').innerText=Vat;
-            document.getElementById('sd').innerText=Sd;
-            document.getElementById('discount').innerText=Discount;
+            $('#total').text(Total);
+            $('#payable').text(Payable);
+            $('#vat').text(Vat);
+            $('#sd').text(Sd);
+            $('#discount').text(Discount);
         }
 
 
         function add() {
-           let PId= document.getElementById('PId').value;
-           let PName= document.getElementById('PName').value;
-           let PPrice=document.getElementById('PPrice').value;
-           let PQty= document.getElementById('PQty').value;
+           let PId= $('#PId').val();
+           let PName= $('#PName').val();
+           let PPrice=$('#PPrice').val();
+           let PQty= $('#PQty').val();
            let PTotalPrice=(parseFloat(PPrice)*parseFloat(PQty)).toFixed(2);
            if(PId.length===0){
                errorToast("Product ID Required");
@@ -239,10 +239,10 @@
         }
 
         function addModal(id,name,price) {
-            document.getElementById('PId').value=id
-            document.getElementById('PName').value=name
-            document.getElementById('PPrice').value=price
-            $('#create-modal').modal('show')
+            $('#PId').val(id);
+            $('#PName').val(name);
+            $('#PPrice').val(price);
+            $('#create-modal').modal('show');
         }
 
 
@@ -269,9 +269,9 @@
                 let CEmail= $(this).data('email');
                 let CId= $(this).data('id');
 
-                $("#CName").text(CName)
-                $("#CEmail").text(CEmail)
-                $("#CId").text(CId)
+                $("#CName").text(CName);
+                $("#CEmail").text(CEmail);
+                $("#CId").text(CId);
 
             })
 
@@ -308,7 +308,7 @@
                 let PName= $(this).data('name');
                 let PPrice= $(this).data('price');
                 let PId= $(this).data('id');
-                addModal(PId,PName,PPrice)
+                addModal(PId,PName,PPrice);
             })
 
 
@@ -326,12 +326,12 @@
 
 
       async function createInvoice() {
-            let total=document.getElementById('total').innerText;
-            let discount=document.getElementById('discount').innerText;
-            let vat=document.getElementById('vat').innerText;
-            let sd=document.getElementById('sd').innerText;
-            let payable=document.getElementById('payable').innerText;
-            let CId=document.getElementById('CId').innerText;
+            let total=$('#total').text();
+            let discount=$('#discount').text();
+            let vat=$('#vat').text();
+            let sd=$('#sd').text();
+            let payable=$('#payable').text();
+            let CId=$('#CId').text();
 
 
             let Data={

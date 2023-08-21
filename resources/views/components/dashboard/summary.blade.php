@@ -191,14 +191,14 @@
         showLoader();
         let res=await axios.get("/summary");
 
-        document.getElementById('product').innerText=res.data['product']
-        document.getElementById('category').innerText=res.data['category']
-        document.getElementById('customer').innerText=res.data['customer']
-        document.getElementById('invoice').innerText=res.data['sale']
-        document.getElementById('total').innerText=res.data['total']
-        document.getElementById('vat').innerText=res.data['vat']
-        document.getElementById('sd').innerText=res.data['sd']
-        document.getElementById('payable').innerText=res.data['payable']
+        $('#product').text(res.data['product']);
+        $('#category').text(res.data['category']);
+        $('#customer').text(res.data['customer']);
+        $('#invoice').text(res.data['sale']);
+        $('#total').text(res.data['total']);
+        $('#vat').text(res.data['vat']);
+        $('#sd').text(res.data['sd']);
+        $('#payable').text(res.data['payable']);
 
 
         hideLoader();

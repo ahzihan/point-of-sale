@@ -70,14 +70,14 @@
         hideLoader();
 
 
-        document.getElementById('CName').innerText=res.data['customer']['name']
-        document.getElementById('CId').innerText=res.data['customer']['user_id']
-        document.getElementById('CEmail').innerText=res.data['customer']['email']
-        document.getElementById('total').innerText=res.data['sale']['total']
-        document.getElementById('payable').innerText=res.data['sale']['payable']
-        document.getElementById('vat').innerText=res.data['sale']['vat']
-        document.getElementById('vat').innerText=res.data['sale']['sd']
-        document.getElementById('discount').innerText=res.data['sale']['discount']
+        $('#CName').text(res.data['customer']['name']);
+        $('#CId').text(res.data['customer']['user_id']);
+        $('#CEmail').text(res.data['customer']['email']);
+        $('#total').text(res.data['sale']['total']);
+        $('#payable').text(res.data['sale']['payable']);
+        $('#vat').text(res.data['sale']['vat']);
+        $('#vat').text(res.data['sale']['sd']);
+        $('#discount').text(res.data['sale']['discount']);
 
 
         let invoiceList=$('#invoiceList');
@@ -97,7 +97,7 @@
     }
 
     function PrintPage() {
-        let printContents = document.getElementById('invoice').innerHTML;
+        let printContents = $('#invoice').html();
         let originalContents = document.body.innerHTML;
         document.body.innerHTML = printContents;
         window.print();
